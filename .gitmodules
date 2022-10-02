@@ -1,3 +1,6 @@
 [submodule "FfmpegWindowsBuild"]
 	path = FfmpegWindowsBuild
 	url = git@github.com:zwells1/FfmpegWindowsBuild.git
+[submodule "PyUtil"]
+	path = PyUtil
+	url = git@github.com:zwells1/PyUtil.git

@@ -2,26 +2,42 @@ import sys
 import os
 import subprocess
 from GrabSource import *
+from GrabSubmodules import *
 
+#globals are generally bad....
+gFfmpegListFile = "ToMerge/FileList.txt"
+
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+def cleanUpFile(pathToFile):
+
+    isExists = os.path.exists(pathToFile)
+    if isExists:
+        os.remove(pathToFile)
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 def makeFileNamesInTextFile(mergeSource):
     #ffmpeg needs this written to a text file
+    global gFfmpegListFile
+
+    #removing a weird bug where it will try to check the FileLists.txt
+    #file if a user crashes out before previous run cleanus up the file
+    cleanUpFile(gFfmpegListFile)
 
     listOfFiles = os.listdir(mergeSource)
 
-    with open('ToMerge/FileList.txt', 'w+') as fp:
+    with open(gFfmpegListFile, 'w+') as fp:
         for each in listOfFiles:
             fileAndPath = str(mergeSource + each)
-            fp.write("file '%s'\n" % fileAndPath)
+            fp.write("file '%s'\n" % each)
             print(fileAndPath)
-
 
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 def main(argv):
+    global gFfmpegListFile
 
     TitleScreen.TerminalScreen(os.path.basename(__file__))
 
@@ -34,10 +50,13 @@ def main(argv):
 
     makeFileNamesInTextFile("ToMerge/")
 
+    outputTimeStampedFile = Output.getTimeStampedPrependedFile("Output.mp4")
 
     cmd = [
-            "../FfmpegWindowsBuild/bin/ffmpeg.exe -f concat -safe 0 -i ToMerge/FileList.txt ",
-            " -c copy Output/output.mp4"]
+            "../FfmpegWindowsBuild/bin/ffmpeg.exe -f concat -safe 0 -i ",
+            gFfmpegListFile,
+            " -c copy Output/",
+            outputTimeStampedFile]
 
     cmd = ''.join([str(elem) for i,elem in enumerate(cmd)])
 
@@ -45,8 +64,7 @@ def main(argv):
     subprocess.run(cmd, shell=True)
 
     #cleanup, remove FileList
-    os.remove("ToMerge/FileList.txt")
-
+    cleanUpFile(gFfmpegListFile)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

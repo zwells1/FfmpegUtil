@@ -35,7 +35,7 @@ def main(argv):
     cmd = ''.join([str(elem) for i,elem in enumerate(cmd)])
 
     print(cmd)
-    #subprocess.run(cmd, shell=True)
+    subprocess.run(cmd, shell=True)
 
     #cleanup, remove FileList
     os.remove("ToMerge/FileList.txt")

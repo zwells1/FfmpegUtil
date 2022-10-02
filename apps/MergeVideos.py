@@ -6,7 +6,7 @@ from GrabSource import *
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-def getFileNames(mergeSource):
+def makeFileNamesInTextFile(mergeSource):
     #ffmpeg needs this written to a text file
 
     listOfFiles = os.listdir(mergeSource)
@@ -25,7 +25,14 @@ def main(argv):
 
     TitleScreen.TerminalScreen(os.path.basename(__file__))
 
-    getFileNames("ToMerge/")
+    #first time make sure input and output directories exist.
+    paths = ["ToMerge/", "Output"]
+    for eachPath in paths:
+        isExist = os.path.exists(eachPath)
+        if not isExist:
+            os.makedirs(eachPath)
+
+    makeFileNamesInTextFile("ToMerge/")
 
 
     cmd = [

@@ -1,15 +1,14 @@
-import configparser
-
-import sys
+import os
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-def TerminalScreen(argv):
+def TerminalScreen(programName, argv = None):
 
-    print(sys.argv[0])
-    print(sys.argv[1])
-    print(argv)
+    programDetails = programName + ' '
 
-    print("FFmpeg utility: ")
+    if argv != None:
+        for eachArg in argv:
+            programDetails += eachArg
+            programDetails += ' '
 
-
+    print("FFmpeg utility: ", programDetails)

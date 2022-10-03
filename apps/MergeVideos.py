@@ -39,6 +39,8 @@ def makeFileNamesInTextFile(mergeSource):
 def main(argv):
     global gFfmpegListFile
 
+    print(os.name)
+
     TitleScreen.TerminalScreen(os.path.basename(__file__))
 
     #first time make sure input and output directories exist.
@@ -50,10 +52,13 @@ def main(argv):
 
     makeFileNamesInTextFile("ToMerge/")
 
+    ffmpegPath = Path.getAbsolutePathUpNLevels(__file__, 2)
+
     outputTimeStampedFile = Output.getTimeStampedPrependedFile("Output.mp4")
 
     cmd = [
-            "../FfmpegWindowsBuild/bin/ffmpeg.exe -f concat -safe 0 -i ",
+            ffmpegPath,
+            "FfmpegWindowsBuild/bin/ffmpeg.exe -f concat -safe 0 -i ",
             gFfmpegListFile,
             " -c copy Output/",
             outputTimeStampedFile]

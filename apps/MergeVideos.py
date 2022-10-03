@@ -63,7 +63,7 @@ def main(argv):
             Path.getAbsolutePathTolerantToFrozenExe(),
             ffmpegPathDepth)
 
-    if os.name is 'posix':
+    if os.name == 'posix':
         ffmpegPath = ffmpegPath + "FfmpegWindowsBuild/bin/ffmpeg.exe"
     else:
         ffmpegPath = ffmpegPath + "FfmpegWindowsBuild\\bin\\ffmpeg.exe"

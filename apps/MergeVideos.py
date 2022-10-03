@@ -52,7 +52,9 @@ def main(argv):
 
     makeFileNamesInTextFile("ToMerge/")
 
-    ffmpegPath = Path.getAbsolutePathUpNLevels(__file__, 2)
+    ffmpegPath = Path.getAbsolutePathUpNLevels(
+            Path.getAbsolutePathTolerantToFrozenExe(),
+            2)
 
     outputTimeStampedFile = Output.getTimeStampedPrependedFile("Output.mp4")
 

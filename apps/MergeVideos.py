@@ -51,16 +51,28 @@ def main(argv):
             os.makedirs(eachPath)
 
     makeFileNamesInTextFile("ToMerge/")
+    #changes the depth depending on the environment
+    ffmpegPathDepth = None
+
+    if Path.isScriptFrozen():
+        ffmpegPathDepth = 1
+    else:
+        ffmpegPathDepth = 2
 
     ffmpegPath = Path.getAbsolutePathUpNLevels(
             Path.getAbsolutePathTolerantToFrozenExe(),
-            2)
+            ffmpegPathDepth)
+
+    if os.name is 'posix':
+        ffmpegPath = ffmpegPath + "FfmpegWindowsBuild/bin/ffmpeg.exe"
+    else:
+        ffmpegPath = ffmpegPath + "FfmpegWindowsBuild\\bin\\ffmpeg.exe"
 
     outputTimeStampedFile = Output.getTimeStampedPrependedFile("Output.mp4")
 
     cmd = [
             ffmpegPath,
-            "FfmpegWindowsBuild/bin/ffmpeg.exe -f concat -safe 0 -i ",
+            " -f concat -safe 0 -i ",
             gFfmpegListFile,
             " -c copy Output/",
             outputTimeStampedFile]

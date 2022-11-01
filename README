@@ -1,0 +1,9 @@
+A lib designed to streamline simple repetive tasks I found myself using.
+
+on first pull:
+git clone <repo name>
+
+grab submodules:
+git submodule update --init --recursive
+
+
